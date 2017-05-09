@@ -5,3 +5,5 @@ unsigned seed;
 
 EXTERN int rand(void);
 EXTERN void srand(unsigned _seed);
+
+#endif
