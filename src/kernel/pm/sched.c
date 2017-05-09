@@ -110,7 +110,7 @@ PUBLIC void yield(void)
 		 */
 		else
 			p->counter++;
-	
+	}
 
 
 	/* Switch to next process. */

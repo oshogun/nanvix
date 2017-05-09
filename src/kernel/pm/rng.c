@@ -1,4 +1,5 @@
 #include <nanvix/rng.h>
+#include <nanvix/const.h>
 
 /* Based on the glibc implementation of rand() */
 PUBLIC int rand() {
