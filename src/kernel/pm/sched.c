@@ -110,8 +110,9 @@ PUBLIC void yield(void)
 		 */
 		else
 			p->counter++;
-	}
 	
+
+
 	/* Switch to next process. */
 	next->priority = PRIO_USER;
 	next->state = PROC_RUNNING;

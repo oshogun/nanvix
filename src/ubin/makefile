@@ -42,10 +42,10 @@
 .PHONY: ps
 .PHONY: clear
 .PHONY: nim
-
+.PHONY: grandma
 # Builds everything.
 all: cat chgrp chmod chown cp echo kill ln login ls mv nice pwd rm stat sync \
-	 touch tsh ps clear nim
+	 touch tsh ps clear nim grandma
 
 # Builds cat.
 cat: 
@@ -138,6 +138,10 @@ clear:
 # Builds nim.
 nim: 
 	$(CC) $(CFLAGS) $(LDFLAGS) nim/*.c -o $(UBINDIR)/nim $(LIBDIR)/libc.a
+
+# Builds grandma
+nim: 
+	$(CC) $(CFLAGS) $(LDFLAGS) grandma/*.c -o $(UBINDIR)/grandma $(LIBDIR)/libc.a
 
 # Clean compilation files.
 clean:
