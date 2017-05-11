@@ -84,7 +84,7 @@ PUBLIC const sighandler_t sigdfl[NR_SIGNALS] = {
 PRIVATE void _terminate(int sig)
 {
 	die(((sig & 0xff) << 16) | (1 << 9));
-}
+} // edgiest function ever written
 
 /**
  * @brief Aborts the current running process.

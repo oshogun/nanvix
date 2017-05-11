@@ -239,6 +239,8 @@ static int sched_test0(void)
 	/* Child process. */
 	else if (pid == 0)
 	{
+		printf("Fork off motherforker\n");
+		printf("I don't actually know this process priority :D\n");
 		work_cpu();
 		_exit(EXIT_SUCCESS);
 	}

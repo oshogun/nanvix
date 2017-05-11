@@ -209,7 +209,7 @@
 	
 	/* Forward definitions. */
 	EXTERN void bury(struct process *);
-	EXTERN void die(int);
+	EXTERN void die(int); 
 	EXTERN int issig(void);
 	EXTERN void pm_init(void);
 	EXTERN void sched(struct process *);
@@ -268,11 +268,11 @@
 	#define IS_SUPERUSER(p) \
 		(((p)->uid == SUPERUSER) || ((p)->euid == SUPERUSER))
 	
-	/* Forward definitions. */	
+	/* Forward declarations. */	
 	EXTERN void resume(struct process *);
 	EXTERN void stop(void);
 	
-	/* Forward definitions. */
+	/* Forward declarations. */
 	EXTERN int shutting_down;
 	EXTERN struct process proctab[PROC_MAX];
 	EXTERN struct process *curr_proc;
