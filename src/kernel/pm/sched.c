@@ -33,6 +33,7 @@ PUBLIC void sched(struct process *proc)
 {
 	proc->state = PROC_READY;
 	proc->priority -= 20;
+	proc->counter = 0;
 }
 
 /**
@@ -98,10 +99,19 @@ PUBLIC void yield(void)
 		 * Process with higher
 		 * waiting time found.
 		 */
+		if(p->priority == next->priority)
+		{
+			if (p->counter > next->counter)
+			{
+				next->counter++;
+				next = p;
+			}
+		}
 		if (p->priority < next->priority)
 		{
 			
 			next->priority-=20;
+			next->counter++;
 			p->priority+=20;
 			next = p;
 			
@@ -113,6 +123,7 @@ PUBLIC void yield(void)
 		 */
 		else {
 			p->priority-=20;
+			p->counter++;
 		}
 	}
 
@@ -126,13 +137,21 @@ PUBLIC void yield(void)
 		if (p->priority == next->priority && p->nice > next->nice) 
 		{
 			next->priority-=20;
-			p->priority-=20;
+			p->priority +=20;
+			next->counter++;
 			next = p;
 		} 
-		else 
+		else if (p->priority == next->priority && p->nice == next->nice)
 		{
-			p->priority-=20;
+			if (p->counter > next->counter)
+			{
+				next->counter++;
+				next->priority-=20;
+				p->priority+=20;
+				next = p;
+			}
 		}
+
 	}
 	
 	
