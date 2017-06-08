@@ -33,10 +33,10 @@
 #define EXTENDED (1 << 0)
 #define FULL     (1 << 1)
 #define VERBOSE  (1 << 2)
-
+#define EXPANDED (1 << 0)
 /* Test flags. */
-static unsigned flags = VERBOSE | FULL;
-
+// static unsigned flags = VERBOSE | FULL;
+static unsigned flags = VERBOSE | EXPANDED;
 /*============================================================================*
  *                               swap_test                                    *
  *============================================================================*/

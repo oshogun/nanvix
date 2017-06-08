@@ -1,3 +1,5 @@
+// Procceed, hero, into Terror's Lair.
+
 /*
  * Copyright(C) 2011-2016 Pedro H. Penna <pedrohenriquepenna@gmail.com>
  * 
@@ -136,7 +138,7 @@ PRIVATE int swap_out(struct process *proc, addr_t addr)
 	/* Set page as non-present. */
 	pg->present = 0;
 	pg->frame = blk;
-	tlb_flush();
+	tlb_flush(); // tee eru bee furashu
 	
 	putkpg(kpg);
 	return (0);
@@ -189,7 +191,7 @@ PRIVATE int swap_in(unsigned frame, addr_t addr)
 	
 	/* Copy page. */
 	kmemcpy((void *)addr, kpg, PAGE_SIZE);
-	pg->accessed = 0;
+	pg->accessed = 1;
 	pg->dirty = 0;
 		
 	putkpg(kpg);
@@ -284,6 +286,7 @@ PRIVATE struct
 	addr_t addr;    /**< Address of the page. */
 } frames[NR_FRAMES] = {{0, 0, 0, 0},  };
 
+
 /**
  * @brief Allocates a page frame.
  * 
@@ -301,7 +304,7 @@ PRIVATE int allocf(void)
 	oldest = -1;
 	for (i = 0; i < NR_FRAMES; i++)
 	{
-		/* Found it. */
+		/* Found it. */ 
 		if (frames[i].count == 0)
 			goto found;
 		
@@ -315,6 +318,7 @@ PRIVATE int allocf(void)
 			/* Oldest page found. */
 			if ((oldest < 0) || (OLDEST(i, oldest)))
 				oldest = i;
+
 		}
 	}
 	
@@ -427,7 +431,8 @@ PRIVATE int readpg(struct region *reg, addr_t addr)
 	inode = reg->file.inode;
 	p = (char *)(addr & PAGE_MASK);
 	count = file_read(inode, p, PAGE_SIZE, off);
-	
+	pg->accessed = 1;
+
 	/* Failed to read page. */
 	if (count < 0)
 	{
@@ -740,6 +745,25 @@ error0:
  * @returns Upon successful completion, zero is returned. Upon failure, non-zero
  *          is returned instead.
  */
+
+
+/**
+* lol vo documentar saporra não
+*/
+PUBLIC void do_aging() 
+{
+
+	for (int i = 0; i < NR_FRAMES; i++)
+	{
+		struct pte *pg = getpte(curr_proc, frames[i].addr);
+		frames[i].age = frames[i].age >> 1;
+		frames[i].age |= pg->accessed << 31;
+		pg->accessed = 0;
+		if (i == 0)
+			kprintf("age = %d", frames[i].age);
+	}	
+}
+
 PUBLIC int pfault(addr_t addr)
 {
 	unsigned i;           /* Frame index.            */

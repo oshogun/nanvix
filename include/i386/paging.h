@@ -1,4 +1,9 @@
 /*
+* Procced, hero, into terror's lair. 
+*/
+
+
+/*
  * Copyright(C) 2011-2016 Pedro H. Penna <pedrohenriquepenna@gmail.com>
  * 
  * This file is part of Nanvix.
@@ -20,6 +25,7 @@
 #ifndef I386_PAGING_H_
 #define I386_PAGING_H_
 	
+
 	/* Shifts and masks. */
 	#define PAGE_SHIFT  12                  /* Page shift.                 */
 	#define PGTAB_SHIFT 22                  /* Page table shift.           */
@@ -33,7 +39,7 @@
 	#define PDE_SIZE   4                 /* Page directory entry size. */
 
 #ifndef _ASM_FILE_
-
+	
 	/*
 	 * Page directory entry.
 	 */
@@ -79,6 +85,8 @@
 	 *   The PGTAB() macro returns the page table number of a given virtual
 	 */
 	#define PGTAB(a) ((unsigned)(a) >> PGTAB_SHIFT)
+	// Forward declaration
+	void do_aging(); // does aging
 
 #endif /* _ASM_FILE_ */
 

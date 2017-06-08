@@ -21,6 +21,7 @@
 #include <nanvix/hal.h>
 #include <nanvix/klib.h>
 #include <nanvix/pm.h>
+#include <i386/paging.h>
 
 /* Clock ticks since system initialization. */
 PUBLIC unsigned ticks = 0;
@@ -34,7 +35,11 @@ PUBLIC unsigned startup_time = 0;
 PRIVATE void do_clock()
 {
 	ticks++;
-	
+	if (ticks % 20 == 0) {
+		do_aging();
+	}
+	//TODO: A cada um certo numero de clocks, pega a pagina virtual usando getpte
+	// adiciona no age, depois de deslocar pra direita.
 	if (KERNEL_RUNNING(curr_proc))
 	{
 		curr_proc->ktime++;
@@ -68,3 +73,37 @@ PUBLIC void clock_init(unsigned freq)
 	outputb(PIT_DATA, (byte_t)(freq_divisor & 0xff));
 	outputb(PIT_DATA, (byte_t)((freq_divisor >> 8)));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// kk eae men
